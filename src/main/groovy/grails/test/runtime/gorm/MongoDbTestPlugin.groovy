@@ -107,11 +107,11 @@ class MongoDbTestPlugin implements TestPlugin {
         }
         def initializer = new MongoDbDataStoreSpringInitializer(persistentClasses)
         if(initializerConfig) {
-        Map<String, Object> initializerConfigAsMap = [:];
-        for(Map.Entry entry : initializerConfig.entrySet())
-        {
-          initializerConfigAsMap.put((String) entry.key, entry.value);
-        }
+            Map<String, Object> initializerConfigAsMap = [:];
+            for(Map.Entry entry : initializerConfig.entrySet())
+            {
+              initializerConfigAsMap.put((String) entry.key, entry.value);
+            }
             initializer.configuration = new PropertySourcesConfig(initializerConfigAsMap);
         }
         if(mongo) {
