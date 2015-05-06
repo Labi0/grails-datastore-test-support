@@ -26,11 +26,10 @@ import groovy.transform.TypeCheckingMode
 import javax.sql.DataSource
 
 import org.apache.tomcat.jdbc.pool.DataSource as TomcatDataSource
-import org.grails.config.PropertySourcesConfig
-import org.grails.core.artefact.DomainClassArtefactHandler
-import grails.core.GrailsApplication
-import org.grails.spring.beans.factory.InstanceFactoryBean
-import grails.persistence.support.PersistenceContextInterceptor
+import org.codehaus.groovy.grails.commons.DomainClassArtefactHandler
+import org.codehaus.groovy.grails.commons.GrailsApplication
+import org.codehaus.groovy.grails.commons.InstanceFactoryBean
+import org.codehaus.groovy.grails.support.PersistenceContextInterceptor
 import org.hibernate.SessionFactory
 import org.springframework.beans.factory.support.BeanDefinitionRegistry
 import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy
@@ -205,12 +204,7 @@ class HibernateTestPlugin implements TestPlugin {
         def initializer = new HibernateDatastoreSpringInitializer(persistentClasses)
 
         Properties mergedConfig = mergeHibernateConfig(grailsApplication, defaultHibernateConfig, initializerConfig)
-        Map<String, Object> mergedConfigAsMap = [:];
-        for(Map.Entry entry : mergedConfig.entrySet())
-        {
-          mergedConfigAsMap.put((String) entry.key, entry.value);
-        }
-        initializer.configuration = new PropertySourcesConfig(mergedConfigAsMap)
+        initializer.configuration = mergedConfig
         
         def context = grailsApplication.getMainContext()
         def beansClosure = initializer.getBeanDefinitions((BeanDefinitionRegistry)context)

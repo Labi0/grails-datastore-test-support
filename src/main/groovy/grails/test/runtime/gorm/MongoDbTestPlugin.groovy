@@ -22,9 +22,8 @@ import grails.test.runtime.TestPlugin
 import grails.test.runtime.TestRuntime
 import groovy.transform.CompileStatic
 
-import org.grails.core.artefact.DomainClassArtefactHandler
-import grails.core.GrailsApplication
-import org.grails.config.PropertySourcesConfig;
+import org.codehaus.groovy.grails.commons.DomainClassArtefactHandler
+import org.codehaus.groovy.grails.commons.GrailsApplication
 import org.grails.datastore.gorm.GormEnhancer
 import org.springframework.beans.factory.support.BeanDefinitionRegistry
 
@@ -107,12 +106,7 @@ class MongoDbTestPlugin implements TestPlugin {
         }
         def initializer = new MongoDbDataStoreSpringInitializer(persistentClasses)
         if(initializerConfig) {
-        Map<String, Object> initializerConfigAsMap = [:];
-        for(Map.Entry entry : initializerConfig.entrySet())
-        {
-          initializerConfigAsMap.put((String) entry.key, entry.value);
-        }
-            initializer.configuration = new PropertySourcesConfig(initializerConfigAsMap);
+            initializer.configuration = initializerConfig
         }
         if(mongo) {
             initializer.mongo = mongo
